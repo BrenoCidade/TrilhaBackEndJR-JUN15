@@ -17,6 +17,8 @@ public class Task {
     private String nameTask;
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @CreationTimestamp
