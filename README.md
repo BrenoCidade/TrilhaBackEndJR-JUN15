@@ -1,5 +1,165 @@
 ![Código Certo Coders](https://utfs.io/f/3b2340e8-5523-4aca-a549-0688fd07450e-j4edu.jfif)
 
+## Steps to Setup
+
+### 1. Clone the repository
+
+> git clone https://github.com/BrenoCidade/TrilhaBackEndJR-JUN15
+
+### 2. Start the application via Maven package or Start it using Spring Boot Application as default:
+ `TrilhaBackEndJR-JUN15/project/src/main/java/com/trilhabackendjr/project/ProjectApplication.java`
+
+### 3. The App will start running at http://localhost:8080/
+
+___
+
+## Explore HTTP Methods:
+
+| Http Methods(auth)      | URL                                                 |
+| ----------------------- | --------------------------------------------------- |
+| POST                    | http://localhost:8080/auth/login                    |
+| POST                    | http://localhost:8080/auth/register                 |
+
+| Http Methods(tasks)    | URL                                                  |
+| ----------------------- | --------------------------------------------------- |
+| GET                     | http://localhost:8080/tasks                         |
+| GET({taskId})           | http://localhost:8080/tasks/{taskId}                |
+| POST                    | http://localhost:8080/tasks                         |
+| PUT                     | http://localhost:8080/tasks/{taskId}                |
+| DELETE                  | http://localhost:8080/tasks/{taskId}                |
+
+You can use them using a REST client such as Apidog, Postman, Insomnia, etc.
+
+Be careful to use the correct Id and remove the `{taskId}`. For example: 
+> Put - http://localhost:8080/tasks/1
+
+## How use Http Methods(auth):
+
+`POST` : http://localhost:8080/auth/register
+
+Creating one user within the Database.
+
+Body Return:
+
+```Json
+{
+    "username": "teste",
+    "password": "12345"
+}
+```
+___
+
+`POST` : http://localhost:8080/auth/login 
+
+Login.
+
+Body: 
+
+```Json
+{
+    "username": "brenocidade",
+    "password": "12345"
+}
+```
+___
+
+## How use Http Methods(tasks):
+
+`GET` : http://localhost:8080/tasks/  
+
+Getting all tasks from the Database.
+
+Body Return:
+
+```Json
+[
+    {
+        "taskId": 1,
+        "nameTask": "Task 1",
+        "description": "OIE galera",
+        "creationTimestamp": "2024-07-04T18:08:16.357Z"
+    },
+    {
+        "taskId": 2,
+        "nameTask": "Task 2",
+        "description": "OIE galera2",
+        "creationTimestamp": "2024-07-04T18:08:17.300Z"
+    },
+    {
+        "taskId": 3,
+        "nameTask": "Task 3",
+        "description": "OIE galera3",
+        "creationTimestamp": "2024-07-04T18:08:19.141Z"
+    },
+    {
+        "taskId": 4,
+        "nameTask": "Task 4",
+        "description": "OIE galera4"
+        "creationTimestamp": "2024-07-04T18:08:19.990Z"
+    }
+]
+```
+___
+
+`GET` : http://localhost:8080/tasks/1  
+
+Getting task by id from the Database.
+
+Body Return:
+
+```Json
+[
+    {
+        "taskId": 1,
+        "nameTask": "Task 1",
+        "description": "OIE galera",
+        "creationTimestamp": "2024-07-04T18:08:16.357Z"
+    }
+]
+```
+___
+
+`POST` : http://localhost:8080/tasks/   
+
+Creating one task within the Database.
+
+Body: 
+
+```Json
+{
+    "description": "OIE galera1",
+    "nameTask": "Task 1"
+}
+```
+___
+
+`PUT/{taskId}` : http://localhost:8080/tasks/1
+
+Updating a task by Id.
+
+Body: 
+
+```Json
+{
+    "description": "OIE teste",
+    "nameTask": "Task 2567"
+}
+```
+___
+
+`DELETE/{taskId}` : http://localhost:8080/tasks/1
+
+Delete a task by Id.
+
+Body: 
+
+```Json
+
+```
+___
+
+
+
 # 📚 Trilha Inicial BackEnd Jr
 Este projeto tem como objetivo desenvolver uma API RESTful para gerenciamento de tarefas, proporcionando funcionalidades de CRUD (Create, Read, Update, Delete) de tarefas, autenticação de usuários e armazenamento dos dados em um banco de dados.
 
