@@ -29,6 +29,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public UUID getUserId() {
         return userId;
     }
