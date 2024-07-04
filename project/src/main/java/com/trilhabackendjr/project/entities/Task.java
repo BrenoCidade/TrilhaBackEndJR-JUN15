@@ -1,7 +1,8 @@
 package com.trilhabackendjr.project.entities;
 
-
+import com.trilhabackendjr.project.controllers.dto.CreateTaskDto;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
@@ -14,24 +15,24 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
     private Long taskId;
+
     private String nameTask;
     private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     @CreationTimestamp
     private Instant creationTimestamp;
 
-    public Task() {
+    public Task() {}
+
+    public Task(@Valid CreateTaskDto dto) {
+        this.nameTask = dto.getNameTask();
+        this.description = dto.getDescription();
     }
 
-    public Task(Long taskId, String nameTask, String description, User user, Instant creationTimestamp) {
+    public Task(Long taskId, String nameTask, String description, Instant creationTimestamp) {
         this.taskId = taskId;
         this.nameTask = nameTask;
         this.description = description;
-        this.user = user;
         this.creationTimestamp = creationTimestamp;
     }
 
@@ -57,14 +58,6 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Instant getCreationTimestamp() {
