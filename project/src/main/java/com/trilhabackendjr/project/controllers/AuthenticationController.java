@@ -1,10 +1,12 @@
 package com.trilhabackendjr.project.controllers;
 
 
+import com.trilhabackendjr.project.controllers.dto.AuthResponseDto;
 import com.trilhabackendjr.project.controllers.dto.AuthenticationDto;
 import com.trilhabackendjr.project.controllers.dto.RegisterDto;
 import com.trilhabackendjr.project.entities.User;
 import com.trilhabackendjr.project.repository.UserRepository;
+import com.trilhabackendjr.project.services.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +28,17 @@ public class AuthenticationController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDto data) {
         var usernameAndPassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
         var authentication = this.authenticationManager.authenticate(usernameAndPassword);
 
-        return ResponseEntity.ok().build();
+        var token = tokenService.createToken((User) authentication.getPrincipal());
+
+        return ResponseEntity.ok(new AuthResponseDto(token));
     }
 
     @PostMapping("/register")
