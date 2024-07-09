@@ -7,6 +7,9 @@ import com.trilhabackendjr.project.controllers.dto.RegisterDto;
 import com.trilhabackendjr.project.entities.User;
 import com.trilhabackendjr.project.repository.UserRepository;
 import com.trilhabackendjr.project.services.TokenService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +34,11 @@ public class AuthenticationController {
     @Autowired
     private TokenService tokenService;
 
+    @Operation(summary = "Autentica um usuário e gera um token de acesso")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Credenciais inválidas")
+    })
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDto data) {
         var usernameAndPassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
@@ -41,6 +49,10 @@ public class AuthenticationController {
         return ResponseEntity.ok(new AuthResponseDto(token));
     }
 
+    @Operation(summary = "Registra um novo usuário")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuário registrado com sucesso"),
+    })
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDto data){
         if(this.userRepository.findByUsername(data.username()) != null)
